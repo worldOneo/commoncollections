@@ -9,13 +9,22 @@ func TestSet(t *testing.T) {
 	if set.Contains(0) {
 		t.Fatalf("Empty set contains 0")
 	}
+	keys := make([]int, 33, 33)
 	for i := 0; i < 33; i++ {
+		keys[i] = i
 		set.Insert(i)
 	}
 	for i := 0; i < 33; i++ {
 		if !set.Contains(i) {
 			t.Fatalf("Set doesnt contain %d", i)
 		}
+	}
+	i := 0
+	for _, v := range set.Values() {
+		i += 1<<v
+	}
+	if i != 0x1ffffffff {
+		t.Fatalf("Not all values present in set value: %v", set.Values())
 	}
 	for i := 0; i < 33; i++ {
 		set.Remove(i)
