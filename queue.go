@@ -1,5 +1,6 @@
 package commoncollections
 
+// Queue type for a FIFO queue based on a circular buffer
 type Queue[T any] struct {
 	nilvalue T
 	buff     []T
@@ -7,6 +8,9 @@ type Queue[T any] struct {
 	write    int
 }
 
+// NewQueue creates a new Queue.
+// Takes "nilvalue" as argument which is returned if no item
+// can be read from the Queue
 func NewQueue[T any](nilvalue T) *Queue[T] {
 	return &Queue[T]{
 		nilvalue: nilvalue,
@@ -16,6 +20,8 @@ func NewQueue[T any](nilvalue T) *Queue[T] {
 	}
 }
 
+// Push adds an element to the back of the queue.
+// This might increase the size of the internal buffer.
 func (Q *Queue[T]) Push(elem T) {
 	Q.buff[Q.write] = elem
 	Q.write++
@@ -32,6 +38,9 @@ func (Q *Queue[T]) Push(elem T) {
 	}
 }
 
+// Pop reads the last element from the queue removing it.
+// It returns the element and true if an element is present
+// and returns the nilvalue and false if no element is left.
 func (Q *Queue[T]) Pop() (T, bool) {
 	if Q.read == Q.write {
 		return Q.nilvalue, false
@@ -42,4 +51,15 @@ func (Q *Queue[T]) Pop() (T, bool) {
 		Q.read = 0
 	}
 	return val, true
+}
+
+// Peek reads the last element from the queue without changing
+// the queue.
+// Returns the element and true if an element is present
+// and returns the nilvalue and false if no element is left.
+func (Q *Queue[T]) Peek() (T, bool) {
+	if Q.read == Q.write {
+		return Q.nilvalue, false
+	}
+	return Q.buff[Q.read], true
 }
