@@ -34,3 +34,8 @@ func (S Set[T]) Values() []T {
 	}
 	return keys
 }
+
+// Len returs the size of the set
+func (S Set[T]) Len() int {
+	return len(S)
+}

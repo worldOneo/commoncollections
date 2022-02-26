@@ -63,3 +63,11 @@ func (Q *Queue[T]) Peek() (T, bool) {
 	}
 	return Q.buff[Q.read], true
 }
+
+func (Q *Queue[T]) Len() int {
+	diff := Q.write - Q.read
+	if diff < 0 {
+		return len(Q.buff) + diff
+	}
+	return diff
+}

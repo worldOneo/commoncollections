@@ -13,6 +13,9 @@ func TestSet(t *testing.T) {
 	for i := 0; i < 33; i++ {
 		keys[i] = i
 		set.Insert(i)
+		if set.Len() != i+1 {
+			t.Fatalf("Size of set wrong, expected %v got %v", i+1, set.Len())
+		}
 	}
 	for i := 0; i < 33; i++ {
 		if !set.Contains(i) {
@@ -21,7 +24,7 @@ func TestSet(t *testing.T) {
 	}
 	i := 0
 	for _, v := range set.Values() {
-		i += 1<<v
+		i += 1 << v
 	}
 	if i != 0x1ffffffff {
 		t.Fatalf("Not all values present in set value: %v", set.Values())

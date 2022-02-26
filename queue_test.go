@@ -14,6 +14,9 @@ func TestQueue(t *testing.T) {
 	}
 	for i := 0; i < 33; i++ {
 		queue.Push(i)
+		if queue.Len() != i+1 {
+			t.Fatalf("Size of queue wrong, expected %v got %v", i+1, queue.Len())
+		}
 	}
 	val, ok := queue.Peek()
 	if val != 0 || !ok {
