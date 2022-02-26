@@ -1,14 +1,12 @@
 package commoncollections
 
-import "sync"
-
 // Pool stores a set of items.
 // It can returned a pooled or a new one when an item is retrieved.
 // A pool might be synced for parallel access see NewSyncPool.
 type Pool[T any] struct {
 	queue   *Queue[T]
 	sync    bool
-	lock    sync.Mutex
+	lock    SpinLock
 	factory func() T
 }
 
@@ -19,7 +17,7 @@ func newPool[T any](factory func() T, isSync bool) *Pool[T] {
 	return &Pool[T]{
 		queue:   queue,
 		sync:    isSync,
-		lock:    sync.Mutex{},
+		lock:    SpinLock(0),
 		factory: factory,
 	}
 }
