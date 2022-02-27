@@ -33,7 +33,7 @@ func NewIntMap[V any](nilvalue V) *IntMap[V] {
 		values:   make([]V, initMapSize),
 		keymask:  initMapSize - 1,
 		hasFree:  false,
-		cap:      (initMapSize / 6) * 7,
+		cap:      (initMapSize / 8) * 7,
 		size:     0,
 		nilvalue: nilvalue,
 	}
@@ -74,10 +74,7 @@ func (im *IntMap[V]) Put(key uint64, val V) {
 // 0, false if the item isn't in this map.
 func (im *IntMap[V]) Get(key uint64) (V, bool) {
 	if key == freeKey {
-		if im.hasFree {
-			return im.free, true
-		}
-		return im.nilvalue, false
+		return im.free, im.hasFree
 	}
 	index := im.index(key)
 	for {
