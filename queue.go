@@ -26,9 +26,7 @@ func (Q *Queue[T]) Push(elem T) {
 	Q.buff[Q.write] = elem
 	Q.write++
 	cap := len(Q.buff)
-	if Q.write >= cap {
-		Q.write = 0
-	}
+	Q.write &= cap - 1 // cap power 2 means Q.write %= cap
 	if Q.write == Q.read {
 		old := Q.buff
 		Q.buff = make([]T, cap*2)

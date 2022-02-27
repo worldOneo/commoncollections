@@ -11,10 +11,10 @@ This repository uses unreleased rc1 of Go 1.18
 - Queue
 - Set
 - Pool
+- Map
 
 ## Planned
 
-- Map
 - Balanced Binary Tree
 - BK Tree
 - B Tree

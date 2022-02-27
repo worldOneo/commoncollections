@@ -35,3 +35,9 @@ func (s *SpinLock) Unlock() {
 		panic("SpinLock: Unlock of unlocked lock")
 	}
 }
+
+// NewSpinLock creates a new spinlock
+func NewSpinLock() *SpinLock {
+	lock := SpinLock(0)
+	return &lock
+}

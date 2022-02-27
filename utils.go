@@ -54,3 +54,19 @@ func Min[T constraints.Ordered](a, b T) T {
 	}
 	return b
 }
+
+// NoLock satisfies sync.Locker interface without locking
+type NoLock byte
+
+// Lock is a no-op
+func (NoLock) Lock() {}
+
+// Unlock is a no-op
+func (NoLock) Unlock() {}
+
+// NewNoLock creates a new lock which satisfies sync.Locker interface
+// but each operation is a no-op
+func NewNoLock() *NoLock {
+	lock := NoLock(0)
+	return &lock
+}

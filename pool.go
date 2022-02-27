@@ -1,23 +1,23 @@
 package commoncollections
 
+import "sync"
+
 // Pool stores a set of items.
 // It can returned a pooled or a new one when an item is retrieved.
 // A pool might be synced for parallel access see NewSyncPool.
 type Pool[T any] struct {
 	queue   *Queue[T]
-	sync    bool
-	lock    SpinLock
+	lock    sync.Locker
 	factory func() T
 }
 
-func newPool[T any](factory func() T, isSync bool) *Pool[T] {
+func newPool[T any](factory func() T, lock sync.Locker) *Pool[T] {
 	value := factory()
 	queue := NewQueue(value)
 	queue.Push(value)
 	return &Pool[T]{
 		queue:   queue,
-		sync:    isSync,
-		lock:    SpinLock(0),
+		lock:    lock,
 		factory: factory,
 	}
 }
@@ -28,24 +28,22 @@ func newPool[T any](factory func() T, isSync bool) *Pool[T] {
 // The Pool requires locking for this and might therefore
 // be slower for
 func NewSyncPool[T any](factory func() T) *Pool[T] {
-	return newPool(factory, true)
+	return newPool(factory, NewSpinLock())
 }
 
 // NewPool creates a new Pool which is not safe to access
 // from multiple goroutines.
 // For a safe implementation us NewSyncPool
 func NewPool[T any](factory func() T) *Pool[T] {
-	return newPool(factory, false)
+	return newPool(factory, NewNoLock())
 }
 
 // Get returns an item from the pool if any is available
 // or creates a new one.
 func (P *Pool[T]) Get() T {
-	if P.sync {
-		P.lock.Lock()
-		defer P.lock.Unlock()
-	}
+	P.lock.Lock()
 	val, ok := P.queue.Pop()
+	P.lock.Unlock()
 	if !ok {
 		return P.factory()
 	}
@@ -54,9 +52,7 @@ func (P *Pool[T]) Get() T {
 
 // Put adds a the given element to the Pool.
 func (P *Pool[T]) Put(elem T) {
-	if P.sync {
-		P.lock.Lock()
-		defer P.lock.Unlock()
-	}
+	P.lock.Lock()
 	P.queue.Push(elem)
+	P.lock.Unlock()
 }
