@@ -27,7 +27,7 @@ const (
 )
 
 // NewIntMap initialises a new intmap
-func NewIntMap[V any](nilvalue V) *IntMap[V] {
+func NewIntMap[V any]() *IntMap[V] {
 	return &IntMap[V]{
 		keys:     make([]uint64, initMapSize),
 		values:   make([]V, initMapSize),
@@ -35,7 +35,7 @@ func NewIntMap[V any](nilvalue V) *IntMap[V] {
 		hasFree:  false,
 		cap:      (initMapSize / 8) * 7,
 		size:     0,
-		nilvalue: nilvalue,
+		nilvalue: *new(V),
 	}
 }
 

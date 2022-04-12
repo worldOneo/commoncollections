@@ -5,7 +5,7 @@ import (
 )
 
 func filled(n uint64) *IntMap[uint64] {
-	m := NewIntMap[uint64](0)
+	m := NewIntMap[uint64]()
 	for i := uint64(0); i < n; i++ {
 		m.Put(i, i)
 	}

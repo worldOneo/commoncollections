@@ -3,7 +3,7 @@ package commoncollections
 import "testing"
 
 func TestQueue(t *testing.T) {
-	queue := NewQueue(0)
+	queue := NewQueue[int]()
 	_, ok := queue.Peek()
 	if ok {
 		t.Fatalf("Could peek into empty queue")

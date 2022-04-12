@@ -9,11 +9,9 @@ type Queue[T any] struct {
 }
 
 // NewQueue creates a new Queue.
-// Takes "nilvalue" as argument which is returned if no item
-// can be read from the Queue
-func NewQueue[T any](nilvalue T) *Queue[T] {
+func NewQueue[T any]() *Queue[T] {
 	return &Queue[T]{
-		nilvalue: nilvalue,
+		nilvalue: *new(T),
 		buff:     make([]T, 16),
 		read:     0,
 		write:    0,

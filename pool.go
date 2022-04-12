@@ -13,7 +13,7 @@ type Pool[T any] struct {
 
 func newPool[T any](factory func() T, lock sync.Locker) *Pool[T] {
 	value := factory()
-	queue := NewQueue(value)
+	queue := NewQueue[T]()
 	queue.Push(value)
 	return &Pool[T]{
 		queue:   queue,

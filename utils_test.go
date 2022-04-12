@@ -4,6 +4,8 @@ import (
 	"testing"
 )
 
+const FNV_ITERS = 1_000_000
+
 func TestSliceEquals(t *testing.T) {
 	if SliceEquals([]int{1, 2, 3, 4}, []int{1, 2, 3, 5}) || SliceEquals([]int{1, 2, 3, 4}, []int{1, 2, 3, 4, 5}) {
 		t.Fatalf("Uneqaul arrays are equall")
@@ -17,8 +19,8 @@ func TestFNV64(t *testing.T) {
 	mp := NewSet[uint64]()
 	bytes := [8]byte{}
 	slice := bytes[:]
-	for i := 0; i < 100_000_000; i++ {
-		if i%1_000_000 == 0 {
+	for i := 0; i < FNV_ITERS; i++ {
+		if i%100_000 == 0 {
 			t.Logf("Iter %d\n", i)
 		}
 		randomString(slice)

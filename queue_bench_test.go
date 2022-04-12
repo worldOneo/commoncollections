@@ -3,7 +3,7 @@ package commoncollections
 import "testing"
 
 func BenchmarkQueuePush(b *testing.B) {
-	queue := NewQueue(0)
+	queue := NewQueue[int]()
 	for i := 0; i < b.N; i++ {
 		queue.Push(i)
 	}
@@ -11,7 +11,7 @@ func BenchmarkQueuePush(b *testing.B) {
 
 
 func BenchmarkQueuePop(b *testing.B) {
-	queue := NewQueue(0)
+	queue := NewQueue[int]()
 	for i := 0; i < b.N; i++ {
 		queue.Push(i)
 	}
