@@ -1,6 +1,6 @@
 package commoncollections
 
-// Queue type for a FIFO queue based on a circular buffer
+// Queue type for an unbound FIFO queue
 type Queue[T any] struct {
 	nilvalue T
 	buff     []T

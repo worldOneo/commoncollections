@@ -1,22 +1,20 @@
 # Common Collections for Go
 
-Well known collections implemented in Go for the new upcomming 1.18 version
-
-## Warning
-
-This repository uses unreleased rc1 of Go 1.18
+Well known collections implemented in Go 1.18 with generics.
+`commmoncollections` contains regular mutable collections.
+`safecollections` contains immutable collections which are therefore inherently concurrent safe.
 
 ## Currently Implemented
 
 - Queue
 - Set
 - Pool
-- Map
+- Map [+safe]
+- Stack [+safe]
 
 ## Planned
 
 - Balanced Binary Tree
 - BK Tree
 - B Tree
-- Prefix Trie
 - GC avoiding Object-ID store
