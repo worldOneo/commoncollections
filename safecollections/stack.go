@@ -5,7 +5,7 @@ package safecollections
 type Stack[T any] struct {
 	tail *Stack[T]
 	val  T
-	size int
+	size uint64
 }
 
 
@@ -21,7 +21,7 @@ func (s *Stack[T]) Pop() (*Stack[T], T) {
 }
 
 // Size returns the number of elements in the stack.
-func (s *Stack[T]) Size() int {
+func (s *Stack[T]) Size() uint64 {
 	return s.size
 }
 
@@ -32,8 +32,8 @@ func (s *Stack[T]) Peak() T {
 
 // Get returns the nth value in the stack.
 // Panics if n is out of bounds.
-func (s *Stack[T]) Get(i int) T {
-	if i < 0 || i >= s.size {
+func (s *Stack[T]) Get(i uint64) T {
+	if i >= s.size {
 		panic("index out of range")
 	}
 	if i == 0 {

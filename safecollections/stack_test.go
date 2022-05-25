@@ -2,13 +2,13 @@ package safecollections
 
 import "testing"
 
-func fillStack(n int) *Stack[int] {
-	stack := &Stack[int]{}
-	for i := 0; i < n; i++ {
+func fillStack(n uint64) *Stack[uint64] {
+	stack := &Stack[uint64]{}
+	for i := uint64(0); i < n; i++ {
 		stack = stack.Push(i)
 	}
 	return stack
-} 
+}
 
 func TestStack_Push(t *testing.T) {
 	stack := fillStack(200)
@@ -19,8 +19,8 @@ func TestStack_Push(t *testing.T) {
 
 func TestStack_Pop(t *testing.T) {
 	stack := fillStack(200)
-	var val int
-	for i := 0; i < 200; i++ {
+	var val uint64
+	for i := uint64(0); i < 200; i++ {
 		stack, val = stack.Pop()
 		if val != 199-i {
 			t.Errorf("Stack.Pop() got = %v, want %v", val, 199-i)
@@ -40,7 +40,7 @@ func TestStack_Peak(t *testing.T) {
 
 func TestStack_Get(t *testing.T) {
 	stack := fillStack(200)
-	for i := 0; i < 200; i++ {
+	for i := uint64(0); i < 200; i++ {
 		if stack.Get(i) != 199-i {
 			t.Errorf("Stack.Get() got = %v, want %v", stack.Get(i), 199-i)
 		}
@@ -64,5 +64,5 @@ func TestStack_GetBoundsUnder(t *testing.T) {
 			t.Errorf("Stack.Get() did not panic")
 		}
 	}()
-	stack.Get(-1)
+	stack.Get(201)
 }

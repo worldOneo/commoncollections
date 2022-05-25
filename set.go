@@ -10,32 +10,32 @@ func NewSet[T comparable]() Set[T] {
 }
 
 // Insert adds the item elem to the set.
-func (S Set[T]) Insert(elem T) {
-	S[elem] = struct{}{}
+func (set Set[T]) Insert(elem T) {
+	set[elem] = struct{}{}
 }
 
 // Contains returns true if the set contains elem and false otherwise.
-func (S Set[T]) Contains(elem T) bool {
-	_, ok := S[elem]
+func (set Set[T]) Contains(elem T) bool {
+	_, ok := set[elem]
 	return ok
 }
 
 // Remove removes the given element from the map
-func (S Set[T]) Remove(elem T) {
-	delete(S, elem)
+func (set Set[T]) Remove(elem T) {
+	delete(set, elem)
 }
 
 // Values returns all values in the set
 // It returns a new slice with a copy of the elements in it
-func (S Set[T]) Values() []T {
-	keys := make([]T, 0, len(S))
-	for key := range S {
+func (set Set[T]) Values() []T {
+	keys := make([]T, 0, len(set))
+	for key := range set {
 		keys = append(keys, key)
 	}
 	return keys
 }
 
 // Len returs the size of the set
-func (S Set[T]) Len() int {
-	return len(S)
+func (set Set[T]) Len() int {
+	return len(set)
 }

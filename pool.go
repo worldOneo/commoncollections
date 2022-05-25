@@ -40,19 +40,19 @@ func NewPool[T any](factory func() T) *Pool[T] {
 
 // Get returns an item from the pool if any is available
 // or creates a new one.
-func (P *Pool[T]) Get() T {
-	P.lock.Lock()
-	val, ok := P.queue.Pop()
-	P.lock.Unlock()
+func (pool *Pool[T]) Get() T {
+	pool.lock.Lock()
+	val, ok := pool.queue.Pop()
+	pool.lock.Unlock()
 	if !ok {
-		return P.factory()
+		return pool.factory()
 	}
 	return val
 }
 
 // Put adds a the given element to the Pool.
-func (P *Pool[T]) Put(elem T) {
-	P.lock.Lock()
-	P.queue.Push(elem)
-	P.lock.Unlock()
+func (pool *Pool[T]) Put(elem T) {
+	pool.lock.Lock()
+	pool.queue.Push(elem)
+	pool.lock.Unlock()
 }

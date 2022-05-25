@@ -20,31 +20,31 @@ func NewQueue[T any]() *Queue[T] {
 
 // Push adds an element to the back of the queue.
 // This might increase the size of the internal buffer.
-func (Q *Queue[T]) Push(elem T) {
-	Q.buff[Q.write] = elem
-	Q.write++
-	cap := len(Q.buff)
-	Q.write &= cap - 1 // cap power 2 means Q.write %= cap
-	if Q.write == Q.read {
-		old := Q.buff
-		Q.buff = make([]T, cap*2)
-		copy(Q.buff, old[:Q.read])
-		copy(Q.buff[Q.write+cap:], old[Q.read:])
-		Q.read += cap
+func (queue *Queue[T]) Push(elem T) {
+	queue.buff[queue.write] = elem
+	queue.write++
+	cap := len(queue.buff)
+	queue.write &= cap - 1 // cap power 2 means Q.write %= cap
+	if queue.write == queue.read {
+		old := queue.buff
+		queue.buff = make([]T, cap*2)
+		copy(queue.buff, old[:queue.read])
+		copy(queue.buff[queue.write+cap:], old[queue.read:])
+		queue.read += cap
 	}
 }
 
 // Pop reads the last element from the queue removing it.
 // It returns the element and true if an element is present
 // and returns the nilvalue and false if no element is left.
-func (Q *Queue[T]) Pop() (T, bool) {
-	if Q.read == Q.write {
-		return Q.nilvalue, false
+func (queue *Queue[T]) Pop() (T, bool) {
+	if queue.read == queue.write {
+		return queue.nilvalue, false
 	}
-	val := Q.buff[Q.read]
-	Q.read++
-	if Q.read >= len(Q.buff) {
-		Q.read = 0
+	val := queue.buff[queue.read]
+	queue.read++
+	if queue.read >= len(queue.buff) {
+		queue.read = 0
 	}
 	return val, true
 }
@@ -53,17 +53,17 @@ func (Q *Queue[T]) Pop() (T, bool) {
 // the queue.
 // Returns the element and true if an element is present
 // and returns the nilvalue and false if no element is left.
-func (Q *Queue[T]) Peek() (T, bool) {
-	if Q.read == Q.write {
-		return Q.nilvalue, false
+func (queue *Queue[T]) Peek() (T, bool) {
+	if queue.read == queue.write {
+		return queue.nilvalue, false
 	}
-	return Q.buff[Q.read], true
+	return queue.buff[queue.read], true
 }
 
-func (Q *Queue[T]) Len() int {
-	diff := Q.write - Q.read
+func (queue *Queue[T]) Len() int {
+	diff := queue.write - queue.read
 	if diff < 0 {
-		return len(Q.buff) + diff
+		return len(queue.buff) + diff
 	}
 	return diff
 }
