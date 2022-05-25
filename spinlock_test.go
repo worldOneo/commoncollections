@@ -28,4 +28,5 @@ func TestSpinLockUnlock(t *testing.T) {
 	}()
 	lock := SpinLock(0)
 	lock.Unlock()
+	t.Fatalf("unlocked spinlock unlocked")
 }
