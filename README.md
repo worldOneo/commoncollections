@@ -11,10 +11,10 @@ Well known collections implemented in Go 1.18 with generics.
 - Pool
 - Map [+safe]
 - Stack [+safe]
+- Slap Allocator
 
 ## Planned
 
 - Balanced Binary Tree
 - BK Tree
 - B Tree
-- GC avoiding Object-ID store
