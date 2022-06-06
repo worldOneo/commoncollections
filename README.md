@@ -11,7 +11,7 @@ Well known collections implemented in Go 1.18 with generics.
 - Pool
 - Map [+safe]
 - Stack [+safe]
-- Slap Allocator
+- Slab Allocator
 
 ## Planned
 

@@ -1,7 +1,6 @@
 package commoncollections
 
 import (
-	"runtime"
 	"sync/atomic"
 )
 
@@ -20,9 +19,7 @@ const maxSchedules = 16
 func (s *SpinLock) Lock() {
 	schedule := 1
 	for !atomic.CompareAndSwapUint32((*uint32)(s), 0, 1) {
-		for i := 0; i < schedule; i++ {
-			runtime.Gosched()
-		}
+		spin(schedule)
 		schedule = Min(schedule<<1, maxSchedules)
 	}
 }

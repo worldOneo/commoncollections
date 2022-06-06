@@ -1,7 +1,7 @@
 package commoncollections
 
 // AllocatorRef is a reference to an allocated object
-// allocated by a SlapAllocator.
+// allocated by a SlabAllocator.
 // The object is guaranteed to be valid until the
 // AllocatorRef is freed.
 // The value of the object is undefined after its
@@ -13,7 +13,7 @@ type AllocatorRef[T any] struct {
 	ref  T
 }
 
-// SlapAllocator is a memory allocator that
+// SlabAllocator is a memory allocator that
 // allocates a fixed size block of memory
 // and returns references to the allocated
 // values.
@@ -23,15 +23,15 @@ type AllocatorRef[T any] struct {
 // It is not threadsafe.
 // Locks and bound checks are not implemented
 // and must be done by the caller if needed.
-type SlapAllocator[T any] struct {
+type SlabAllocator[T any] struct {
 	next int
 	data []AllocatorRef[T]
 }
 
-// NewSlapAllocator creates a new SlapAllocator which holds
+// NewSlabAllocator creates a new SlabAllocator which holds
 // size number of elements.
-func NewSlapAllocator[T any](size int) *SlapAllocator[T] {
-	allocator := &SlapAllocator[T]{
+func NewSlabAllocator[T any](size int) *SlabAllocator[T] {
+	allocator := &SlabAllocator[T]{
 		data: make([]AllocatorRef[T], size),
 	}
 
@@ -46,7 +46,7 @@ func NewSlapAllocator[T any](size int) *SlapAllocator[T] {
 
 // Allocate allocates a new object from the allocator.
 // Might trigger a reallocation if the allocator is exhausted.
-func (allocator *SlapAllocator[T]) Allocate() *AllocatorRef[T] {
+func (allocator *SlabAllocator[T]) Allocate() *AllocatorRef[T] {
 	if allocator.next == -1 {
 		newSize := len(allocator.data) * 2
 		newData := make([]AllocatorRef[T], newSize)
@@ -65,7 +65,7 @@ func (allocator *SlapAllocator[T]) Allocate() *AllocatorRef[T] {
 }
 
 // Free returns the object to the allocator.
-func (allocator *SlapAllocator[T]) Free(ref *AllocatorRef[T]) {
+func (allocator *SlabAllocator[T]) Free(ref *AllocatorRef[T]) {
 	ref.next = allocator.next
 	allocator.next = ref.pos
 }

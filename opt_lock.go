@@ -27,8 +27,9 @@ import (
 type OptLock uint32
 
 // NewOptLock creates a new OptLock.
-func NewOptLock() OptLock {
-	return OptLock(0)
+func NewOptLock() *OptLock {
+	lock := OptLock(0)
+	return &lock
 }
 
 // RLock acquires the read lock.
