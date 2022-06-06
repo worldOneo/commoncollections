@@ -10,7 +10,7 @@ import (
 // but has less safety checks.
 type RWSpinLock int32
 
-const rwUnhold = int32(2_000_000_000)
+const rwUnhold = int32(1_000_000_000)
 
 // NewRWSpinLock creates a new RWSpinLock.
 func NewRWSpinLock() *RWSpinLock {
