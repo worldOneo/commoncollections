@@ -13,9 +13,8 @@ type RWSpinLock int32
 const rwUnhold = int32(1_000_000_000)
 
 // NewRWSpinLock creates a new RWSpinLock.
-func NewRWSpinLock() *RWSpinLock {
-	lock := RWSpinLock(rwUnhold)
-	return &lock
+func NewRWSpinLock() RWSpinLock {
+	return RWSpinLock(rwUnhold)
 }
 
 func spin(backoff int) {
