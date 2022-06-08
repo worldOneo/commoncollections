@@ -9,7 +9,7 @@ func filled(n uint64) *IntMap[uint64] {
 	for i := uint64(0); i < n; i++ {
 		m.Put(i, i)
 	}
-	return m
+	return &m
 }
 
 func filledStd(n uint64) map[uint64]uint64 {

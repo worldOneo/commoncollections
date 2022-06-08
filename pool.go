@@ -11,12 +11,12 @@ type Pool[T any] struct {
 	factory func() T
 }
 
-func newPool[T any](factory func() T, lock sync.Locker) *Pool[T] {
+func newPool[T any](factory func() T, lock sync.Locker) Pool[T] {
 	value := factory()
 	queue := NewQueue[T]()
 	queue.Push(value)
-	return &Pool[T]{
-		queue:   queue,
+	return Pool[T]{
+		queue:   &queue,
 		lock:    lock,
 		factory: factory,
 	}
@@ -27,14 +27,14 @@ func newPool[T any](factory func() T, lock sync.Locker) *Pool[T] {
 //
 // The Pool requires locking for this and might therefore
 // be slower for
-func NewSyncPool[T any](factory func() T) *Pool[T] {
+func NewSyncPool[T any](factory func() T) Pool[T] {
 	return newPool(factory, NewSpinLock())
 }
 
 // NewPool creates a new Pool which is not safe to access
 // from multiple goroutines.
 // For a safe implementation us NewSyncPool
-func NewPool[T any](factory func() T) *Pool[T] {
+func NewPool[T any](factory func() T) Pool[T] {
 	return newPool(factory, NewNoLock())
 }
 

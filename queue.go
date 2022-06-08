@@ -9,8 +9,8 @@ type Queue[T any] struct {
 }
 
 // NewQueue creates a new Queue.
-func NewQueue[T any]() *Queue[T] {
-	return &Queue[T]{
+func NewQueue[T any]() Queue[T] {
+	return Queue[T]{
 		nilvalue: *new(T),
 		buff:     make([]T, 16),
 		read:     0,

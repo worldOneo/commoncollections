@@ -30,8 +30,8 @@ type SlabAllocator[T any] struct {
 
 // NewSlabAllocator creates a new SlabAllocator which holds
 // size number of elements.
-func NewSlabAllocator[T any](size int) *SlabAllocator[T] {
-	allocator := &SlabAllocator[T]{
+func NewSlabAllocator[T any](size int) SlabAllocator[T] {
+	allocator := SlabAllocator[T]{
 		data: make([]AllocatorRef[T], size),
 	}
 

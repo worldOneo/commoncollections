@@ -25,7 +25,7 @@ func TestFreePool(t *testing.T) {
 		return val
 	}
 	pool := NewPool(factory)
-	testPool(t, pool)
+	testPool(t, &pool)
 }
 
 func TestSyncPool(t *testing.T) {
@@ -39,5 +39,5 @@ func TestSyncPool(t *testing.T) {
 		return val
 	}
 	pool := NewSyncPool(factory)
-	testPool(t, pool)
+	testPool(t, &pool)
 }

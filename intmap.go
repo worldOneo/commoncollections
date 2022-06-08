@@ -27,8 +27,8 @@ const (
 )
 
 // NewIntMap initialises a new intmap
-func NewIntMap[V any]() *IntMap[V] {
-	return &IntMap[V]{
+func NewIntMap[V any]() IntMap[V] {
+	return IntMap[V]{
 		keys:     make([]uint64, initMapSize),
 		values:   make([]V, initMapSize),
 		keymask:  initMapSize - 1,
