@@ -41,11 +41,8 @@ func (lock *RWSpinLock) RLock() {
 }
 
 // RUnlock unlocks the RWSpinLock for reading.
-// Panics if the RWSpinLock is not locked for reading.
 func (lock *RWSpinLock) RUnlock() {
-	if atomic.AddInt32((*int32)(lock), 1) > rwUnhold {
-		panic("RWSpinLock: runlock of unheld lock")
-	}
+	atomic.AddInt32((*int32)(lock), 1)
 }
 
 // Lock locks the RWSpinLock for writing.

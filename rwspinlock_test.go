@@ -53,13 +53,3 @@ func TestRWLock(t *testing.T) {
 		<-ch
 	}
 }
-
-func TestRWLock_PanicRUnlock(t *testing.T) {
-	lock := NewRWSpinLock()
-	defer func() {
-		if r := recover(); r == nil {
-			t.Error("expected panic")
-		}
-	}()
-	lock.RUnlock()
-}
