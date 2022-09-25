@@ -55,6 +55,14 @@ func Min[T constraints.Ordered](a, b T) T {
 	return b
 }
 
+// Abs returns the absolute value of a.
+func Abs[T constraints.Signed](a T) T {
+	if a < T(0) {
+		return -a
+	}
+	return a
+}
+
 // NoLock satisfies sync.Locker interface without locking
 type NoLock byte
 

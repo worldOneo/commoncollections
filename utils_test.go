@@ -43,3 +43,9 @@ func TestMin(t *testing.T) {
 		t.Fatalf("Invalid value returned from max")
 	}
 }
+
+func TestAbs(t *testing.T) {
+	if Abs(1) != 1 || Abs(-1) != 1 || Abs(0) != 0 {
+		t.Fatalf("Invalid value returned from abs")
+	}
+}
