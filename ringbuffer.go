@@ -1,7 +1,5 @@
 package commoncollections
 
-const maxUint64 = ^uint64(0)
-
 // A RingBuffer is a FIFO queue with a fixed size.
 // If the buffer is full, the oldest element is overwritten.
 type RingBuffer[T any] struct {

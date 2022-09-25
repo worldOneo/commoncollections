@@ -17,10 +17,11 @@ func NewRWSpinLock() RWSpinLock {
 	return RWSpinLock(rwUnhold)
 }
 
-func spin(backoff int) {
+func spin(backoff int) int {
 	for i := 0; i < backoff; i++ {
 		runtime.Gosched()
 	}
+	return Min(backoff<<1, maxSchedules)
 }
 
 // RLock locks the RWSpinLock for reading.
@@ -34,8 +35,7 @@ func (lock *RWSpinLock) RLock() {
 		atomic.AddInt32((*int32)(lock), 1)
 		backoff := 1
 		for atomic.LoadInt32((*int32)(lock)) <= 0 {
-			spin(backoff)
-			backoff = Min(backoff<<1, maxSchedules)
+			backoff = spin(backoff)
 		}
 	}
 }
@@ -54,8 +54,7 @@ func (lock *RWSpinLock) Lock() {
 			return
 		}
 		atomic.AddInt32((*int32)(lock), rwUnhold)
-		spin(backoff)
-		backoff = Min(backoff<<1, maxSchedules)
+		backoff = spin(backoff)
 	}
 }
 

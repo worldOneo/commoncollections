@@ -19,8 +19,7 @@ const maxSchedules = 16
 func (s *SpinLock) Lock() {
 	schedule := 1
 	for !atomic.CompareAndSwapUint32((*uint32)(s), 0, 1) {
-		spin(schedule)
-		schedule = Min(schedule<<1, maxSchedules)
+		schedule = spin(schedule)
 	}
 }
 

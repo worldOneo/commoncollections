@@ -32,7 +32,7 @@ func BenchmarkStdMap_Get(b *testing.B) {
 	m := filledStd(uint64(b.N))
 	b.ResetTimer()
 	for i := uint64(0); i < uint64(b.N); i++ {
-		_, _ = m[i]
+		_ = m[i]
 	}
 }
 

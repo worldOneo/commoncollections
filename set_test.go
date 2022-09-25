@@ -9,7 +9,7 @@ func TestSet(t *testing.T) {
 	if set.Contains(0) {
 		t.Fatalf("Empty set contains 0")
 	}
-	keys := make([]int, 33, 33)
+	keys := make([]int, 33)
 	for i := 0; i < 33; i++ {
 		keys[i] = i
 		set.Insert(i)
