@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-const PRODUCERS = 100
+const PRODUCERS = 5
 
 func BenchmarkStdChannel(b *testing.B) {
 	req := make(chan *sync.Mutex, PRODUCERS)

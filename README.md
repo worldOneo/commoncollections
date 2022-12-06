@@ -9,6 +9,7 @@ Well known collections implemented in Go 1.18 with generics.
 - Queue
 - Set
 - Pool
+- BK Tree
 - Map [+safe]
 - Stack [+safe]
 - Slab Allocator
@@ -16,5 +17,4 @@ Well known collections implemented in Go 1.18 with generics.
 ## Planned
 
 - Balanced Binary Tree
-- BK Tree
 - B Tree
