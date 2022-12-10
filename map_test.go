@@ -5,12 +5,12 @@ import (
 )
 
 func TestMap_Put(t *testing.T) {
-	n := uint64(10_000_000)
+	n := uint64(1_000_000)
 	filledMap(n)
 }
 
 func TestMap_Get(t *testing.T) {
-	n := uint64(10_000_000)
+	n := uint64(1_000_000)
 	m := filledMap(n)
 	for _, i := range randomInts(n) {
 		v, ok := m.Get(i)
@@ -40,7 +40,7 @@ func TestMap_Collission(t *testing.T) {
 }
 
 func TestMap_Delete(t *testing.T) {
-	n := uint64(10_000_000)
+	n := uint64(1_000_000)
 	m := filledMap(n)
 	for i := uint64(0); i < n-1; i++ {
 		v, ok := m.Delete(i)
