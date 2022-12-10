@@ -41,8 +41,30 @@ func filledStd(n uint64) map[uint64]uint64 {
 	return m
 }
 
-func BenchmarkStdMap_Put(b *testing.B) {
+type deop struct {
+	i int
+	t bool
+}
+
+func deopo(i uint64) deop {
+	return deop{int(i), true}
+}
+
+func filledStdDeOp(n uint64) map[deop]deop {
+	m := make(map[deop]deop)
+	input := randomInts(n)
+	for i := uint64(0); i < n; i++ {
+		m[deopo(input[i])] = deopo(input[i])
+	}
+	return m
+}
+
+func BenchmarkStdMapFast64_Put(b *testing.B) {
 	filledStd(uint64(b.N))
+}
+
+func BenchmarkStdMap_Put(b *testing.B) {
+	filledStdDeOp(uint64(b.N))
 }
 
 func BenchmarkIntMap_Put(b *testing.B) {

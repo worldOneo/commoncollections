@@ -17,8 +17,9 @@ type IntMap[V any] struct {
 }
 
 func scramble(k uint64) uint64 {
-	hash := k * 0x9E3779B9
-	return hash * (hash >> 16)
+	k ^= k >> 33
+	k *= 0xff51afd7ed558ccd
+	return k ^ (k >> 33)
 }
 
 const (
